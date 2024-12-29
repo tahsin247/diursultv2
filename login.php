@@ -177,7 +177,7 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
     <!-- Header with Logo -->
     <div class="header">
         <img src="logo.png" alt="DIU Logo">
-        <h1>Student Semester Result Portal</h1>
+        <h1>DIU Student Result Portal</h1>
     </div>
 
     <!-- Login Form -->
@@ -196,13 +196,13 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
         </form>
         <div id="message" class="message"></div>
         <div class="forgot-password">
-            <a href="#">Forgot Password?</a>
+            <a href="#">Use Your Student Portal Credentials for login.</a>
         </div>
     </div>
 
     <!-- Info Section -->
     <div class="info-section">
-        <p>Are You a New Student? | <a href="#">What is Student Portal?</a> | <a href="#">How to Use Student Portal</a></p>
+        <p>Are You a New Student? | <a href="#">What is DIU Student Result Portal?</a> | <a href="#">How to Use DIU Student Result Portal</a></p>
     </div>
 
     <!-- Footer -->
@@ -222,9 +222,10 @@ if (isset($_SESSION['username']) && !empty($_SESSION['username'])) {
         messageElement.textContent = "Logging in...";
         messageElement.style.color = "#00695c";
 
-        try {
+         try {
             const url = `https://diursultv2.onrender.com/dapis.php?username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&grecaptcha=`;
             const response = await fetch(url);
+
 
             if (!response.ok) {
                 throw new Error(`HTTP Error: ${response.status}`);
