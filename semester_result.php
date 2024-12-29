@@ -73,6 +73,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 ?>
 
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -81,185 +83,355 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>Semester Results - DIU Academic Portal</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
-        /* General Styles */
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(to right, #004d40, #009688);
-            color: #333;
-        }
+/* Base Styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #004d40, #009688);
+    color: #333;
+    min-height: 100vh;
+}
 
-        .container {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 20px;
-            background: #fff;
-            border-radius: 12px;
-            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-        }
+.container {
+    max-width: 1200px;
+    margin: 20px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    width: calc(100% - 40px);
+    box-sizing: border-box;
+}
 
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px;
-            background: #ffffff;
-            border-bottom: 2px solid #ddd;
-        }
+/* Header Styles */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background: #ffffff;
+    border-bottom: 2px solid #ddd;
+    flex-wrap: wrap;
+    gap: 15px;
+}
 
-        .header img {
-            width: 100px;
-        }
+.header img {
+    width: 100px;
+    height: auto;
+    object-fit: contain;
+}
 
-        .header h1 {
-            font-size: 1.8rem;
-            color: #333;
-            margin: 0;
-        }
+.header h1 {
+    font-size: 1.5rem;
+    color: #333;
+    margin: 0;
+    text-align: center;
+    flex: 1;
+}
 
-        .logout-button {
-            background: #f44336;
-            color: white;
-            border: none;
-            padding: 10px 15px;
-            font-size: 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+/* Button Styles */
+.logout-button {
+    background: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    white-space: nowrap;
+}
 
-        .logout-button:hover {
-            background: #d32f2f;
-        }
+.logout-button:hover {
+    background: #d32f2f;
+}
 
-        .menu {
-            display: flex;
-            justify-content: center;
-            background: #00695c;
-            padding: 10px;
-        }
 
-        .menu a {
-            color: white;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: bold;
-            margin: 0 15px;
-            padding: 10px 15px;
-            border-radius: 8px;
-            transition: background 0.3s ease, transform 0.2s ease;
-        }
 
-        .menu a:hover {
-            background: #004d40;
-            transform: translateY(-3px);
-        }
+/* Form Styles */
+.form-section {
+    padding: 20px;
+    margin-bottom: 20px;
+}
 
-        .form-section, .result-section {
-            padding: 20px;
-        }
+.form-section form {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 800px;
+    margin: 0 auto;
+}
 
-        .form-section form {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-        }
+.form-section input,
+.form-section select {
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    flex: 1;
+    min-width: 200px;
+    max-width: 300px;
+    background: #fff;
+}
 
-        .form-section input, .form-section select {
-            padding: 10px;
-            font-size: 1rem;
-            border-radius: 8px;
-            border: 1px solid #ddd;
-        }
+.form-section button {
+    background: #2575fc;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 1rem;
+    min-width: 120px;
+}
 
-        .form-section button {
-            background: #2575fc;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+.form-section button:hover {
+    background: #6a11cb;
+    transform: translateY(-2px);
+}
 
-        .form-section button:hover {
-            background: #6a11cb;
-        }
+/* Result Section Styles */
+.result-section {
+    padding: 20px;
+    overflow-x: auto;
+}
 
-        .result-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin: 20px auto;
-        }
+.result-section h2 {
+    color: #333;
+    text-align: center;
+    margin-bottom: 20px;
+}
 
-        .result-table th, .result-table td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
+.result-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 20px 0;
+    background: #fff;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
 
-        .result-table th {
-            background: #6a11cb;
-            color: white;
-        }
+.result-table th,
+.result-table td {
+    padding: 12px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
 
-        .sgpa-section {
-            text-align: center;
-            font-weight: bold;
-            font-size: 1.2rem;
-            margin-top: 10px;
-        }
+.result-table th {
+    background: #6a11cb;
+    color: white;
+    font-weight: 500;
+}
 
-        .footer {
-            text-align: center;
-            padding: 15px;
-            background: #004d40;
-            color: white;
-            font-size: 0.9rem;
-            border-radius: 0 0 12px 12px;
-        }
+.result-table tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
 
-        /* Print Styles */
-        @media print {
-            body {
-                background: white;
-                color: black;
-            }
+.sgpa-section {
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.2rem;
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 8px;
+}
 
-            .header, .menu, .form-section, .footer {
-                display: none;
-            }
+/* Print Button Styles */
+.print-button {
+    display: block;
+    margin: 20px auto;
+    background: #2575fc;
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
 
-            .container {
-                box-shadow: none;
-                margin: 0;
-                border-radius: 0;
-            }
+.print-button:hover {
+    background: #6a11cb;
+    transform: translateY(-2px);
+}
 
-            .result-section {
-                margin: 0;
-                padding: 0;
-            }
-        }
+/* Footer Styles */
+.footer {
+    text-align: center;
+    padding: 15px;
+    background: #004d40;
+    color: white;
+    font-size: 0.9rem;
+    border-radius: 0 0 12px 12px;
+    margin-top: auto;
+}
 
-        .print-button {
-            display: block;
-            margin: 20px auto;
-            background: #2575fc;
-            color: white;
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
+/* Print Styles */
+@media print {
+    body {
+        background: white;
+        color: black;
+    }
 
-        .print-button:hover {
-            background: #6a11cb;
-        }
-    </style>
+    .header, .menu, .form-section, .footer, .print-button {
+        display: none;
+    }
+
+    .container {
+        box-shadow: none;
+        margin: 0;
+        padding: 0;
+        border-radius: 0;
+        width: 100%;
+    }
+
+    .result-section {
+        margin: 0;
+        padding: 10px;
+    }
+
+    .result-table {
+        box-shadow: none;
+    }
+}
+
+/* Responsive Styles */
+@media (max-width: 992px) {
+    .container {
+        margin: 10px auto;
+    }
+
+    .header {
+        padding: 15px;
+    }
+
+    .header h1 {
+        font-size: 1.3rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        text-align: center;
+        gap: 10px;
+    }
+
+    .header img {
+        width: 80px;
+    }
+
+    .header h1 {
+        font-size: 1.2rem;
+        order: 2;
+    }
+
+    .menu {
+        padding: 10px;
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .menu a {
+        text-align: center;
+        margin: 5px 0;
+    }
+
+    .form-section form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .form-section input,
+    .form-section select,
+    .form-section button {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .result-table {
+        font-size: 0.9rem;
+    }
+
+    .print-button {
+        width: 100%;
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        margin: 5px;
+        padding: 10px;
+    }
+
+    .header img {
+        width: 60px;
+    }
+
+    .header h1 {
+        font-size: 1.1rem;
+    }
+
+    .menu a {
+        font-size: 0.9rem;
+        padding: 8px 15px;
+    }
+
+    .form-section {
+        padding: 10px;
+    }
+
+    .form-section input,
+    .form-section select {
+        font-size: 0.9rem;
+        padding: 10px;
+    }
+
+    .result-table th,
+    .result-table td {
+        padding: 8px;
+        font-size: 0.8rem;
+    }
+
+    .sgpa-section {
+        font-size: 1rem;
+    }
+
+    .footer {
+        font-size: 0.8rem;
+        padding: 10px;
+    }
+}
+
+/* Accessibility Improvements */
+@media (prefers-reduced-motion: reduce) {
+    * {
+        transition: none !important;
+        animation: none !important;
+    }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+    .menu {
+        background: #000;
+    }
+
+    .menu a:hover {
+        background: #333;
+    }
+
+    .result-table th {
+        background: #000;
+    }
+}
+</style>
+
     <script>
         function printResults() {
             window.print();
@@ -277,13 +449,174 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             </form>
         </div>
 
-        <!-- Menu -->
-        <div class="menu">
-            <a href="index.php">Home</a>
-            <a href="about.php">About</a>
-            <a href="semester_result.php"> Results</a>
-            <a href="totalcgpa.php"> Calculator</a>
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        /* Dropdown Menu Styles */
+        .menu {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            background: #00695c;
+            padding: 0;
+            flex-wrap: wrap;
+        }
+
+        .menu-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-link {
+            display: block;
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 500;
+            padding: 15px 20px;
+            transition: background-color 0.3s;
+        }
+
+        .menu-link:hover {
+            background: #004d40;
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #00695c;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .menu-item:hover .dropdown {
+            display: block;
+        }
+
+        .dropdown-link {
+            display: block;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-link:hover {
+            background: #004d40;
+        }
+
+        /* Mobile Menu Styles */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                width: 100%;
+                background: #00695c;
+                text-align: right;
+                padding: 15px;
+            }
+
+            .menu-items {
+                display: none;
+                width: 100%;
+            }
+
+            .menu-items.active {
+                display: block;
+            }
+
+            .menu-item {
+                display: block;
+                width: 100%;
+            }
+
+            .menu-link {
+                padding: 15px;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .dropdown {
+                position: static;
+                background: #005448;
+                box-shadow: none;
+                width: 100%;
+            }
+
+            .dropdown-link {
+                padding-left: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Replace your existing menu with this structure -->
+    <div class="menu">
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <div class="menu-items">
+            <div class="menu-item">
+                <a href="index.php" class="menu-link">Home</a>
+            </div>
+            <div class="menu-item">
+                <a href="semester_result.php" class="dropdown-link">Results</a>
+                </div>
+                    <div class="menu-item">
+                <a href="totalcgpa.php" class="dropdown-link">CGPA Calculator</a>
+                        </div>
+            <div class="menu-item">
+                <a href="about.php" class="menu-link">About</a>
+            </div>
         </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menuItems = document.querySelector('.menu-items');
+            menuItems.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.querySelector('.menu');
+            const menuItems = document.querySelector('.menu-items');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!menu.contains(event.target) && menuItems.classList.contains('active')) {
+                menuItems.classList.remove('active');
+            }
+        });
+
+        // Handle touch events for mobile
+        document.addEventListener('touchstart', function(event) {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
 
 
         <!-- Form Section -->
