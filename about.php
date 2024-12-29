@@ -40,26 +40,118 @@
             font-size: 2rem;
         }
 
-        /* Menu Section */
-        .menu {
+               /* Dropdown Menu Styles */
+               .menu {
+            position: relative;
             display: flex;
             justify-content: center;
             background: #00695c;
-            padding: 10px;
+            padding: 0;
+            flex-wrap: wrap;
         }
-        .menu a {
+
+        .menu-item {
+            position: relative;
+            display: inline-block;
+        }
+
+        .menu-link {
+            display: block;
             color: white;
             text-decoration: none;
             font-size: 1rem;
-            font-weight: bold;
-            margin: 0 15px;
-            padding: 10px 15px;
-            border-radius: 8px;
-            transition: background 0.3s ease, transform 0.2s ease;
+            font-weight: 500;
+            padding: 15px 20px;
+            transition: background-color 0.3s;
         }
-        .menu a:hover {
+
+        .menu-link:hover {
             background: #004d40;
-            transform: translateY(-3px);
+        }
+
+        .dropdown {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #00695c;
+            min-width: 200px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            z-index: 1000;
+            border-radius: 0 0 4px 4px;
+        }
+
+        .menu-item:hover .dropdown {
+            display: block;
+        }
+
+        .dropdown-link {
+            display: block;
+            color: white;
+            padding: 12px 20px;
+            text-decoration: none;
+            transition: background-color 0.3s;
+        }
+
+        .dropdown-link:hover {
+            background: #004d40;
+        }
+
+        /* Mobile Menu Styles */
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .menu {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 0;
+            }
+
+            .menu-toggle {
+                display: block;
+                width: 100%;
+                background: #00695c;
+                text-align: right;
+                padding: 15px;
+            }
+
+            .menu-items {
+                display: none;
+                width: 100%;
+            }
+
+            .menu-items.active {
+                display: block;
+            }
+
+            .menu-item {
+                display: block;
+                width: 100%;
+            }
+
+            .menu-link {
+                padding: 15px;
+                border-top: 1px solid rgba(255,255,255,0.1);
+            }
+
+            .dropdown {
+                position: static;
+                background: #005448;
+                box-shadow: none;
+                width: 100%;
+            }
+
+            .dropdown-link {
+                padding-left: 40px;
+            }
         }
 
         /* About Content Section */
@@ -112,13 +204,52 @@
         <h1>About the DIU Academic Portal</h1>
     </div>
 
-    <!-- Menu Section -->
-    <div class="menu">
-            <a href="index.php">Home</a>
-            <a href="about.php">About</a>
-            <a href="semester_result.php"> Results</a>
-            <a href="totalcgpa.php"> Calculator</a>
+      <!-- Replace your existing menu with this structure -->
+      <div class="menu">
+        <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+        <div class="menu-items">
+            <div class="menu-item">
+                <a href="index.php" class="menu-link">Home</a>
+            </div>
+            <div class="menu-item">
+                <a href="semester_result.php" class="dropdown-link">Results</a>
+                </div>
+                   <div class="menu-item">
+                <a href="totalcgpa.php" class="dropdown-link">CGPA Calculator</a>
+                        </div>
+            <div class="menu-item">
+                <a href="about.php" class="menu-link">About</a>
+            </div>
         </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const menuItems = document.querySelector('.menu-items');
+            menuItems.classList.toggle('active');
+        }
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const menu = document.querySelector('.menu');
+            const menuItems = document.querySelector('.menu-items');
+            const menuToggle = document.querySelector('.menu-toggle');
+            
+            if (!menu.contains(event.target) && menuItems.classList.contains('active')) {
+                menuItems.classList.remove('active');
+            }
+        });
+
+        // Handle touch events for mobile
+        document.addEventListener('touchstart', function(event) {
+            const dropdowns = document.querySelectorAll('.dropdown');
+            dropdowns.forEach(dropdown => {
+                if (!dropdown.contains(event.target)) {
+                    dropdown.style.display = 'none';
+                }
+            });
+        });
+    </script>
 
     <!-- About Content Section -->
     <div class="about-content">
