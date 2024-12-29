@@ -319,7 +319,7 @@ $username = $_SESSION['username'];
 
         <div class="welcome-section">
             <h2>Welcome to the DIU Academic Portal</h2>
-            <p>Your gateway to academic excellence and comprehensive result management.</p>
+           <p>Your one-stop solution for academic results, GPA calculations, and more!</p>
         </div>
         <div class="features">
             <div class="feature-card">
